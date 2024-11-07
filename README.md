@@ -1,3 +1,3 @@
 # HTTP client
 
-HTTP client
+Simple http client
