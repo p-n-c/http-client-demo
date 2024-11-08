@@ -58,6 +58,7 @@ const request = async ({ url, method, mode, credentials }) => {
       report.classList.remove('hidden')
     }, 500)
   } catch (e) {
+    responseOutput.innerText = e.message
     console.error(e)
   }
 }
@@ -65,7 +66,7 @@ const request = async ({ url, method, mode, credentials }) => {
 const handler = ({ customURL }) => {
   const urls = [
     'https://swapi.dev/api/people/10',
-    'http://localhost:3000/?qs1=J',
+    'http://localhost:3000/?qs=red',
   ]
 
   const modes = [
