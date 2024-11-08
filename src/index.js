@@ -1,3 +1,10 @@
+const submitBtn = document.getElementById('submit-btn')
+const responseOutput = document.getElementById('response-output')
+const report = document.querySelector('[aria-labelledby="report"]')
+const contentTypeText = document.getElementById('content-type')
+const contentLengthText = document.getElementById('content-length')
+const bytesLengthText = document.getElementById('bytes-length')
+
 const request = async ({ url, method, mode, credentials }) => {
   const request = new Request(url, {
     method,
@@ -9,22 +16,27 @@ const request = async ({ url, method, mode, credentials }) => {
 
   try {
     const response = await fetch(request)
-
     const clonedResponse = response.clone()
     const getHeader = (header) => clonedResponse.headers.get(header)
-    let contentLength = getHeader('Content-Length')
-    console.log('contentLength: ', contentLength)
+    const getBuffer = async () => {
+      return await response.arrayBuffer()
+    }
+
+    contentTypeText.innerText = getHeader('Content-Type') || 'N/A'
+    contentLengthText.innerText = getHeader('Content-Length') || 0
+
+    const buffer = await getBuffer()
+    const uncompressedBytes = buffer.byteLength
+    bytesLengthText.innerText = uncompressedBytes
 
     if (!response.ok) {
       throw new Error(`Response status: ${response.status}`)
     }
 
-    console.log(response)
+    console.log(clonedResponse)
 
-    const json = await response.json()
+    const json = await clonedResponse.json()
     console.log('JSON ', json)
-
-    const responseOutput = document.getElementById('response-output')
 
     responseOutput.innerText = JSON.stringify(json, null, 2)
   } catch (e) {
@@ -72,9 +84,11 @@ const handler = ({ customURL }) => {
     mode: modes[0],
     credentials: credentials[1],
   })
-}
 
-const submitBtn = document.getElementById('submit-btn')
+  setTimeout(() => {
+    report.classList.remove('hidden')
+  }, 500)
+}
 
 submitBtn.addEventListener('click', (e) => {
   e.preventDefault() // prevent the request causing a page refresh

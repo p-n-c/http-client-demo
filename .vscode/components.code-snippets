@@ -1,0 +1,24 @@
+{
+  "Section": {
+    "prefix": "pac-section",
+    "body": [
+      "<section aria-labelledby=\"${1:id}\">",
+      " <h${2:header number} id=\"${1:id}\">${3:header}</h${2:header number}>",
+      "</section>",
+    ],
+    "description": "Section",
+  },
+  "Pledge": {
+    "prefix": "pac-pledge",
+    "body": [
+      "<p class=\"pledge\">",
+      "<em>",
+      "${1:pledge}, ",
+      "<time datetime=\"PT${2:PT}\">${3:datetime}</time>, ",
+      "<span>${4:reason}</span>",
+      "</em>",
+      "</p>",
+    ],
+    "description": "Section",
+  },
+}

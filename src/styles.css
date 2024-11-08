@@ -3,6 +3,7 @@
   --header-height: 60px;
   --footer-height: 50px;
   --border-colour: #e2e2e2;
+  --visited-colour: #888;
 
   /* Base unit for spacing */
   --space-unit: 0.25rem; /* 4px at default font size */
@@ -59,4 +60,35 @@ button:hover {
 button:active {
   box-shadow: 0 0 0 2px var(--fg-colour);
   outline: none;
+}
+
+p {
+  line-height: 1.7;
+  margin: var(--margin) 0;
+}
+
+/* links */
+
+a {
+  color: var(--fg-colour);
+  text-decoration: underline;
+  text-underline-offset: calc(var(--space-unit) * 1.8);
+}
+
+a.local {
+  text-decoration: underline dashed 1px;
+}
+
+a:visited {
+  color: var(--visited-colour);
+}
+
+a:hover {
+  text-decoration-line: underline overline;
+}
+
+/* States  */
+
+.hidden {
+  display: none;
 }
