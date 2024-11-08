@@ -5,6 +5,8 @@ const contentTypeText = document.getElementById('content-type')
 const contentLengthText = document.getElementById('content-length')
 const bytesLengthText = document.getElementById('bytes-length')
 
+const contentTypes = ['text/html; charset=utf-8', 'application/json']
+
 const request = async ({ url, method, mode, credentials }) => {
   const request = new Request(url, {
     method,
@@ -22,7 +24,8 @@ const request = async ({ url, method, mode, credentials }) => {
       return await response.arrayBuffer()
     }
 
-    contentTypeText.innerText = getHeader('Content-Type') || 'N/A'
+    const contentType = getHeader('Content-Type')
+    contentTypeText.innerText = contentType || 'N/A'
     contentLengthText.innerText = getHeader('Content-Length') || 0
 
     const buffer = await getBuffer()
@@ -30,15 +33,30 @@ const request = async ({ url, method, mode, credentials }) => {
     bytesLengthText.innerText = uncompressedBytes
 
     if (!response.ok) {
+      responseOutput.innerText = 'Your request returned no results'
+      report.classList.add('hidden')
       throw new Error(`Response status: ${response.status}`)
     }
 
     console.log(clonedResponse)
 
-    const json = await clonedResponse.json()
-    console.log('JSON ', json)
+    switch (contentType) {
+      case contentTypes[0]: {
+        const text = await clonedResponse.text()
+        responseOutput.innerText = text
+        break
+      }
+      case contentTypes[1]:
+        {
+          const json = await clonedResponse.json()
+          responseOutput.innerText = JSON.stringify(json, null, 2)
+        }
+        break
+    }
 
-    responseOutput.innerText = JSON.stringify(json, null, 2)
+    setTimeout(() => {
+      report.classList.remove('hidden')
+    }, 500)
   } catch (e) {
     console.error(e)
   }
@@ -84,10 +102,6 @@ const handler = ({ customURL }) => {
     mode: modes[0],
     credentials: credentials[1],
   })
-
-  setTimeout(() => {
-    report.classList.remove('hidden')
-  }, 500)
 }
 
 submitBtn.addEventListener('click', (e) => {
