@@ -1,18 +1,22 @@
-const submitBtn = document.getElementById('submit-btn')
+import { contentTypes, modes, credentials, methods } from './utils.js'
+
+// GET
+const endpointInput = document.getElementById('endpoint')
+const submitGetRequestBtn = document.getElementById('submit-get-request-btn')
 const responseOutput = document.getElementById('response-output')
 const report = document.querySelector('[aria-labelledby="report"]')
 const contentTypeText = document.getElementById('content-type')
 const contentLengthText = document.getElementById('content-length')
 const bytesLengthText = document.getElementById('bytes-length')
+const summaries = document.querySelectorAll('summary')
 
-const contentTypes = ['text/html; charset=utf-8', 'application/json']
+// POST
+const submitPostRequestBtn = document.getElementById('submit-post-request-btn')
+const colourNameInput = document.getElementById('colour-name')
+const hexValueInput = document.getElementById('hex-value')
 
-const request = async ({ url, method, mode, credentials }) => {
-  const request = new Request(url, {
-    method,
-    mode,
-    credentials,
-  })
+const request = async ({ url, options }) => {
+  const request = new Request(url, options)
 
   console.log(request)
 
@@ -63,53 +67,60 @@ const request = async ({ url, method, mode, credentials }) => {
   }
 }
 
-const handler = ({ customURL }) => {
-  const urls = [
-    'https://swapi.dev/api/people/10',
-    'http://localhost:3000/?qs=red',
-  ]
-
-  const modes = [
-    'cors', // default
-    'no-cors',
-    'same-origin',
-    'navigate',
-  ]
-
-  const credentials = [
-    'omit',
-    'same-origin', // default
-    'include',
-  ]
-
-  const methods = [
-    'GET', // default
-    'POST',
-  ]
-
-  const url = customURL || urls[1]
-
-  const config = {
-    headers: [
-      {
-        name: 'Content-Length',
-      },
-    ],
+const getRequestHandler = ({ url }) => {
+  const options = {
+    method: methods[0],
+    mode: modes[0],
+    credentials: credentials[1],
   }
 
   request({
     url,
-    method: methods[0],
-    mode: modes[0],
-    credentials: credentials[1],
+    options,
   })
 }
 
-submitBtn.addEventListener('click', (e) => {
+submitGetRequestBtn.addEventListener('click', (e) => {
   e.preventDefault() // prevent the request causing a page refresh
-  const url = document.getElementById('endpoint').value
-  const customURL = url?.length > 0 ? url : null
-  handler({
-    customURL,
+  const url = endpointInput.value
+  getRequestHandler({
+    url: url?.length > 0 ? url : null,
+  })
+})
+
+const postRequestHandler = async (name, hex) => {
+  const url = 'http://localhost:3000/post'
+
+  const body = JSON.stringify({ name, hex })
+
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body,
+  }
+
+  const request = new Request(url, options)
+
+  try {
+    const response = await fetch(request)
+    console.log('response: ', response)
+  } catch (e) {
+    console.log('e: ', e)
+  }
+}
+
+submitPostRequestBtn.addEventListener('click', (e) => {
+  e.preventDefault()
+  const name = colourNameInput.value
+  const hex = hexValueInput.value
+  postRequestHandler(name, hex)
+})
+
+// Turn details summaries into tabs
+Array.from(summaries).forEach((summary) => {
+  summary.addEventListener('click', (e) => {
+    document.querySelector('[open] summary').click()
   })
 })

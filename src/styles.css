@@ -38,6 +38,8 @@ body {
 
 main {
   padding: var(--padding) 0;
+  display: flex;
+  gap: var(--space-lg);
 }
 
 button,
@@ -91,4 +93,35 @@ a:hover {
 
 .hidden {
   display: none;
+}
+
+/* Layout */
+
+details {
+  position: relative;
+}
+
+summary {
+  width: calc(var(--space-xl) * 4);
+}
+
+label {
+  display: block;
+  margin-top: var(--space-md);
+}
+
+.http-get-request,
+.http-post-request {
+  position: absolute;
+  top: 50px;
+  left: 0;
+}
+
+.http-post-request {
+  left: calc((var(--space-xl) * -4) - var(--space-lg));
+}
+
+.flex-vertical {
+  display: flex;
+  flex-direction: column;
 }

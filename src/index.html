@@ -5,40 +5,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="HTTP client" />
     <title>HTTP client</title>
-    <script src="./index.js" defer></script>
+    <script src="./index.js" defer type="module"></script>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <h1>HTTP client</h1>
     <main>
-      <section aria-labelledby="request">
-        <h2 id="request">Request</h2>
-        <form>
-          <label for="endpoint">API endpoint</label>
-          <input type="text" name="endpoint" id="endpoint" size="30" onfocus=this.value="" />
-          <button id="submit-btn" type="submit">Send Request</button>
-        </form>
-        <section aria-labelledby="api-examples">
-          <h3 id="api-examples">API endpoint examples</h3>
-          <p>http://localhost:3000/?qs=red</p>
-          <p>https://swapi.dev/api/people/10</p>
-        </section>
-      </section>
-      <section aria-labelledby="response">
-        <h2 id="response">Response</h2>
-        <p>
-          <pre>
-            <div id="response-output"></div>
-          </pre>
-        </p>
-      </section>
-      <section aria-labelledby="report" class="hidden">
-        <h2 id="report">Report</h2>
-        <p>Content-Type: <span id="content-type"></span></p>
-        <p>Content-Length: <span id="content-length"></span></p>
-        <p>Bytes: <span id="bytes-length"></span></p>
-        <p>NB To check the byte size of returned JSON, copy the response into the <a rel="noopener" href="https://tools.namlabs.com/json-size-calculator/" target="_blank">JSON Size Calculator</a>.</p>
-      </section>
+      <details open>
+        <summary>HTTP GET</summary>
+        <div class="http-get-request">
+          <section aria-labelledby="get-request">
+            <h2 id="get-request">GET request</h2>
+            <form>
+              <label for="endpoint">API endpoint</label>
+              <input
+                type="text"
+                name="endpoint"
+                id="endpoint"
+                size="30"
+                onfocus="this.value"
+                =""
+              />
+              <button id="submit-get-request-btn" type="submit">
+                Send Request
+              </button>
+            </form>
+            <section aria-labelledby="api-examples">
+              <h3 id="api-examples">API endpoint examples</h3>
+              <p>http://localhost:3000/?colour=red</p>
+              <p>https://swapi.dev/api/people/10</p>
+            </section>
+          </section>
+          <section aria-labelledby="response">
+            <h2 id="response">Response</h2>
+            <pre>
+              <div id="response-output"></div>
+            </pre>
+            <section aria-labelledby="report" class="hidden">
+              <h3 id="report">Report</h3>
+              <p>Content-Type: <span id="content-type"></span></p>
+              <p>Content-Length: <span id="content-length"></span></p>
+              <p>Bytes: <span id="bytes-length"></span></p>
+              <p>
+                NB To check the byte size of returned JSON, copy the response
+                into the
+                <a
+                  rel="noopener"
+                  href="https://tools.namlabs.com/json-size-calculator/"
+                  target="_blank"
+                  >JSON Size Calculator</a
+                >.
+              </p>
+            </section>
+          </section>
+        </div>
+      </details>
+      <details>
+        <summary>HTTP POST</summary>
+        <div class="http-post-request">
+          <section aria-labelledby="post-request">
+            <h2 id="post-request">POST request</h2>
+            <form>
+              <div class="flex-vertical">
+                <label for="colour-name">Colour name</label>
+                <input
+                  type="text"
+                  name="colour-name"
+                  id="colour-name"
+                  size="30"
+                />
+                <label for="hex-value">Hex value</label>
+                <input type="text" name="hex-value" id="hex-value" size="30" />
+              </div>
+            </form>
+            <button id="submit-post-request-btn" type="submit">
+              Post Request
+            </button>
+          </section>
+        </div>
+      </details>
     </main>
   </body>
 </html>
