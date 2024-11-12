@@ -1,5 +1,3 @@
-import { contentTypes, modes, credentials, methods } from './utils.js'
-
 // GET
 const endpointInput = document.getElementById('endpoint')
 const submitGetRequestBtn = document.getElementById('submit-get-request-btn')
@@ -14,11 +12,10 @@ const summaries = document.querySelectorAll('summary')
 const submitPostRequestBtn = document.getElementById('submit-post-request-btn')
 const colourNameInput = document.getElementById('colour-name')
 const hexValueInput = document.getElementById('hex-value')
+const serverResponseText = document.getElementById('server-response')
 
 const request = async ({ url, options }) => {
   const request = new Request(url, options)
-
-  console.log(request)
 
   try {
     const response = await fetch(request)
@@ -42,21 +39,8 @@ const request = async ({ url, options }) => {
       throw new Error(`Response status: ${response.status}`)
     }
 
-    console.log(clonedResponse)
-
-    switch (contentType) {
-      case contentTypes[0]: {
-        const text = await clonedResponse.text()
-        responseOutput.innerText = text
-        break
-      }
-      case contentTypes[1]:
-        {
-          const json = await clonedResponse.json()
-          responseOutput.innerText = JSON.stringify(json, null, 2)
-        }
-        break
-    }
+    const json = await clonedResponse.json()
+    responseOutput.innerText = JSON.stringify(json, null, 2)
 
     setTimeout(() => {
       report.classList.remove('hidden')
@@ -69,9 +53,8 @@ const request = async ({ url, options }) => {
 
 const getRequestHandler = ({ url }) => {
   const options = {
-    method: methods[0],
-    mode: modes[0],
-    credentials: credentials[1],
+    method: 'GET',
+    mode: 'cors',
   }
 
   request({
@@ -80,11 +63,13 @@ const getRequestHandler = ({ url }) => {
   })
 }
 
+// Handle a request
 submitGetRequestBtn.addEventListener('click', (e) => {
   e.preventDefault() // prevent the request causing a page refresh
-  const url = endpointInput.value
+  const colour = endpointInput?.value || null
+  const url = colour ? colour : 'http://localhost:3000/colours'
   getRequestHandler({
-    url: url?.length > 0 ? url : null,
+    url,
   })
 })
 
@@ -105,12 +90,14 @@ const postRequestHandler = async (name, hex) => {
 
   try {
     const response = await fetch(request)
-    console.log('response: ', response)
+    const json = await response.json()
+    serverResponseText.innerText = json.message
   } catch (e) {
     console.log('e: ', e)
   }
 }
 
+// Handle a post
 submitPostRequestBtn.addEventListener('click', (e) => {
   e.preventDefault()
   const name = colourNameInput.value
@@ -120,7 +107,7 @@ submitPostRequestBtn.addEventListener('click', (e) => {
 
 // Turn details summaries into tabs
 Array.from(summaries).forEach((summary) => {
-  summary.addEventListener('click', (e) => {
+  summary.addEventListener('click', () => {
     document.querySelector('[open] summary').click()
   })
 })
