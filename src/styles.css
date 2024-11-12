@@ -110,15 +110,20 @@ label {
   margin-top: var(--space-md);
 }
 
-.http-get-request,
-.http-post-request {
+.http-fetch-get,
+.http-fetch-post,
+.http-form-post {
   position: absolute;
   top: 50px;
   left: 0;
 }
 
-.http-post-request {
+.http-fetch-post {
   left: calc((var(--space-xl) * -4) - var(--space-lg));
+}
+
+.http-form-post {
+  left: calc((var(--space-xl) * -8) - (var(--space-lg) * 2));
 }
 
 .flex-vertical {

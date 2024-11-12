@@ -1,6 +1,6 @@
 // GET
 const endpointInput = document.getElementById('endpoint')
-const submitGetRequestBtn = document.getElementById('submit-get-request-btn')
+const fetchGetBtn = document.getElementById('fetch-get-btn')
 const responseOutput = document.getElementById('response-output')
 const report = document.querySelector('[aria-labelledby="report"]')
 const contentTypeText = document.getElementById('content-type')
@@ -9,7 +9,7 @@ const bytesLengthText = document.getElementById('bytes-length')
 const summaries = document.querySelectorAll('summary')
 
 // POST
-const submitPostRequestBtn = document.getElementById('submit-post-request-btn')
+const fetchPostBtn = document.getElementById('fetch-post-btn')
 const colourNameInput = document.getElementById('colour-name')
 const hexValueInput = document.getElementById('hex-value')
 const serverResponseText = document.getElementById('server-response')
@@ -64,8 +64,7 @@ const getRequestHandler = ({ url }) => {
 }
 
 // Handle a request
-submitGetRequestBtn.addEventListener('click', (e) => {
-  e.preventDefault() // prevent the request causing a page refresh
+fetchGetBtn.addEventListener('click', () => {
   const colour = endpointInput?.value || null
   const url = colour ? colour : 'http://localhost:3000/colours'
   getRequestHandler({
@@ -98,8 +97,7 @@ const postRequestHandler = async (name, hex) => {
 }
 
 // Handle a post
-submitPostRequestBtn.addEventListener('click', (e) => {
-  e.preventDefault()
+fetchPostBtn.addEventListener('click', () => {
   const name = colourNameInput.value
   const hex = hexValueInput.value
   postRequestHandler(name, hex)

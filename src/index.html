@@ -12,24 +12,20 @@
     <h1>HTTP client</h1>
     <main>
       <details open>
-        <summary>HTTP GET</summary>
-        <div class="http-get-request">
+        <summary>FETCH GET</summary>
+        <div class="http-fetch-get">
           <section aria-labelledby="get-request">
             <h2 id="get-request">GET request</h2>
-            <form>
-              <label for="endpoint">API endpoint</label>
-              <input
-                type="text"
-                name="endpoint"
-                id="endpoint"
-                size="30"
-                onfocus="this.value"
-                =""
-              />
-              <button id="submit-get-request-btn" type="submit">
-                Send Request
-              </button>
-            </form>
+            <label for="endpoint">API endpoint</label>
+            <input
+              type="text"
+              name="endpoint"
+              id="endpoint"
+              size="30"
+              onfocus="this.value"
+              =""
+            />
+            <button id="fetch-get-btn" type="button">Send Request</button>
             <section aria-labelledby="api-examples">
               <h3 id="api-examples">API endpoint examples</h3>
               <p>http://localhost:3000/?colour=red</p>
@@ -61,28 +57,38 @@
         </div>
       </details>
       <details>
-        <summary>HTTP POST</summary>
-        <div class="http-post-request">
+        <summary>FETCH POST</summary>
+        <div class="http-fetch-post">
           <section aria-labelledby="post-request">
             <h2 id="post-request">POST request</h2>
-            <form>
-              <div class="flex-vertical">
-                <label for="colour-name">Colour name</label>
-                <input
-                  type="text"
-                  name="colour-name"
-                  id="colour-name"
-                  size="30"
-                />
-                <label for="hex-value">Hex value</label>
-                <input type="text" name="hex-value" id="hex-value" size="30" />
-              </div>
-            </form>
-            <button id="submit-post-request-btn" type="submit">
-              Post Request
-            </button>
+            <div class="flex-vertical">
+              <label for="colour-name">Colour name</label>
+              <input
+                type="text"
+                name="colour-name"
+                id="colour-name"
+                size="30"
+              />
+              <label for="hex-value">Hex value</label>
+              <input type="text" name="hex-value" id="hex-value" size="30" />
+            </div>
+            <button id="fetch-post-btn" type="button">Post Request</button>
             <p><span id="server-response"></span></p>
           </section>
+        </div>
+      </details>
+      <details>
+        <summary>FORM POST</summary>
+        <div class="http-form-post">
+          <form action="http://localhost:3000/post" method="POST">
+            <div class="flex-vertical">
+              <label for="name">Colour name</label>
+              <input type="text" name="name" id="name" size="30" />
+              <label for="hex">Hex value</label>
+              <input type="text" name="hex" id="hex" size="30" />
+            </div>
+            <button id="submit-form-btn" type="submit">Submit form</button>
+          </form>
         </div>
       </details>
     </main>
