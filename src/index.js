@@ -63,7 +63,7 @@ const getRequestHandler = ({ url }) => {
   })
 }
 
-// Handle a request
+// Response to a GET request
 fetchGetBtn.addEventListener('click', () => {
   const colour = endpointInput?.value || null
   const url = colour ? colour : 'http://localhost:3000/colours'
@@ -96,7 +96,7 @@ const postRequestHandler = async (name, hex) => {
   }
 }
 
-// Handle a post
+// Response to a POST request
 fetchPostBtn.addEventListener('click', () => {
   const name = colourNameInput.value
   const hex = hexValueInput.value
