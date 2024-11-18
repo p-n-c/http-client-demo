@@ -109,3 +109,36 @@ Array.from(summaries).forEach((summary) => {
     document.querySelector('[open] summary').click()
   })
 })
+
+// Copy content to the clipboard
+const setClipboard = async (text) => {
+  try {
+    const type = 'text/plain'
+    const blob = new Blob([text], { type })
+    const data = [new ClipboardItem({ [type]: blob })]
+    await navigator.clipboard.write(data)
+    return true
+  } catch (e) {
+    console.error('Failed to copy:', e)
+    return false
+  }
+}
+
+// Handle copy requests
+document.querySelectorAll('.copy').forEach((parent) => {
+  const txt = parent.querySelector('span:first-child').innerText
+  const btn = parent.querySelector('button')
+  const msg = parent.querySelector('span:last-child')
+
+  const handler = async () => {
+    const success = await setClipboard(txt)
+    if (success) {
+      msg.classList.remove('hidden')
+      setTimeout(() => {
+        msg.classList.add('hidden')
+      }, 1000)
+    }
+  }
+
+  btn.addEventListener('click', handler)
+})

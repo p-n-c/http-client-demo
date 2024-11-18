@@ -28,8 +28,24 @@
             <button id="fetch-get-btn" type="button">Send Request</button>
             <section aria-labelledby="api-examples">
               <h3 id="api-examples">API endpoint examples</h3>
-              <p>http://localhost:3000/?colour=red</p>
-              <p>https://swapi.dev/api/people/10</p>
+              <p class="copy">
+                <span>http://localhost:3000/?colour=red</span
+                ><button type="button" aria-label="Copy endpoint URL">
+                  Copy
+                </button>
+                <span class="hidden" role="status" aria-live="polite"
+                  >Copied!</span
+                >
+              </p>
+              <p class="copy">
+                <span>https://swapi.dev/api/starships/10</span
+                ><button type="button" aria-label="Copy endpoint URL">
+                  Copy
+                </button>
+                <span class="hidden" role="status" aria-live="polite"
+                  >Copied!</span
+                >
+              </p>
             </section>
           </section>
           <section aria-labelledby="response">
